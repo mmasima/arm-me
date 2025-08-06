@@ -6,15 +6,10 @@ import '../model/partition_status_response.dart';
 class DemoSystemApi {
   final Dio dio = Dio();
 
-  // Shared request body
-  final Map<String, dynamic> _requestBody = {
-    "Partition": 1,
-    "CL": "TESTBOARD",
-    "AC": "39126",
-    "PanelCode": "1234",
-    "MobileClientId": "Test",
-    "SessionId": "yourname_assessment",
-  };
+  Future<String?> _getName() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('name');
+  }
 
   Future<String?> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -29,12 +24,25 @@ class DemoSystemApi {
     };
   }
 
+  Future<Map<String, dynamic>> _buildRequestBody() async {
+    final name = await _getName();
+    return {
+      "Partition": 1,
+      "CL": "TESTBOARD",
+      "AC": "39126",
+      "PanelCode": "1234",
+      "MobileClientId": "Test",
+      "SessionId": "${name ?? 'unknown'}_assessment",
+    };
+  }
+
   Future<DemoSystemResponse> openConnection() async {
     final headers = await _getAuthHeaders();
+    final body = await _buildRequestBody();
 
     final response = await dio.post(
       'https://testing.srnservices.net/api/v2/DemoSystem/Open',
-      data: _requestBody,
+      data: body,
       options: Options(headers: headers),
     );
 
@@ -47,10 +55,11 @@ class DemoSystemApi {
 
   Future<PartitionStatusResponse> getPartitionStatus() async {
     final headers = await _getAuthHeaders();
+    final body = await _buildRequestBody();
 
     final response = await dio.post(
       'https://testing.srnservices.net/api/v2/DemoSystem/PartitionStatus',
-      data: _requestBody,
+      data: body,
       options: Options(headers: headers),
     );
 
