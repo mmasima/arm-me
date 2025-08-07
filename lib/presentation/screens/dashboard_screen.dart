@@ -89,7 +89,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(); 
+              Navigator.of(context).pop();
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => const LoginScreen()),
@@ -144,32 +144,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         buildStatusCard(
                           title: "Away Armed",
                           value: data.awayArmed,
-                          icon: Icons.security,
                           color: data.awayArmed ? Colors.green : Colors.grey,
                           onToggle: () => armSystem(!data.awayArmed),
                         ),
                         buildStatusCard(
                           title: "Stay Armed",
                           value: data.stayArmed,
-                          icon: Icons.home,
                           color: data.stayArmed ? Colors.green : Colors.grey,
                         ),
                         buildStatusCard(
                           title: "Exit Delay",
                           value: data.exitDelay,
-                          icon: Icons.timer,
                           color: data.exitDelay ? Colors.orange : Colors.grey,
                         ),
                         buildStatusCard(
                           title: "Alarmed",
                           value: data.alarmed,
-                          icon: Icons.warning,
                           color: data.alarmed ? Colors.red : Colors.grey,
                         ),
                         buildStatusCard(
                           title: "Other Alarmed",
                           value: data.otherAlarmed,
-                          icon: Icons.report_problem,
                           color: data.otherAlarmed
                               ? Colors.redAccent
                               : Colors.grey,
@@ -177,7 +172,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         const SizedBox(height: 40),
                         ElevatedButton.icon(
                           onPressed: logout,
-                          icon: const Icon(Icons.logout),
                           label: const Text("Logout"),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
@@ -222,7 +216,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget buildStatusCard({
     required String title,
     required bool value,
-    required IconData icon,
     required Color color,
     VoidCallback? onToggle,
   }) {
@@ -231,7 +224,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        leading: Icon(icon, color: color, size: 30),
         title: Text(
           title,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
