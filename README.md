@@ -1,16 +1,39 @@
-# armme
+# ArmMe App
 
-A new Flutter project.
+A simple Flutter application to interact with a demo alarm system.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Login Screen**  
+  Authenticates users using a username and password.
 
-A few resources to get you started if this is your first Flutter project:
+- **Dashboard Screen**  
+  Displays the current status of the alarm system with the ability to arm/disarm.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **State Management**  
+  Uses `Cubit` from `flutter_bloc` for managing login and dashboard state.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Persistent Storage**  
+  Uses `SharedPreferences` to store the access token and user session data locally.
+
+## Workflow
+
+1. User logs in via the **Login Screen**.
+2. If login is successful, the app navigates to the **Dashboard**.
+3. On the dashboard:
+   - System status is fetched and displayed.
+   - User can refresh status or arm/disarm the system.
+4. User can logout, which clears the session and returns to the login screen.
+
+## Tech Stack
+
+- Flutter
+- Bloc (Cubit)
+- SharedPreferences
+- Dio (for HTTP requests)
+
+## Notes
+
+- The app checks if the user is already logged in using `SharedPreferences` and skips login if a valid token exists.
+- Basic success/failure dialogs are shown for login, logout, and system actions.
+
