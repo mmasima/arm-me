@@ -1,3 +1,4 @@
+import 'package:armme/data/model/arm_status_response.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/demo_system_response.dart';
@@ -5,6 +6,8 @@ import '../model/partition_status_response.dart';
 
 class DemoSystemApi {
   final Dio dio = Dio();
+
+  final uri = 'https://testing.srnservices.net/api/v2/DemoSystem';
 
   Future<String?> _getName() async {
     final prefs = await SharedPreferences.getInstance();
@@ -41,7 +44,7 @@ class DemoSystemApi {
     final body = await _buildRequestBody();
 
     final response = await dio.post(
-      'https://testing.srnservices.net/api/v2/DemoSystem/Open',
+      '$uri/Open',
       data: body,
       options: Options(headers: headers),
     );
@@ -58,7 +61,7 @@ class DemoSystemApi {
     final body = await _buildRequestBody();
 
     final response = await dio.post(
-      'https://testing.srnservices.net/api/v2/DemoSystem/PartitionStatus',
+      '$uri/PartitionStatus',
       data: body,
       options: Options(headers: headers),
     );
@@ -67,6 +70,23 @@ class DemoSystemApi {
       return PartitionStatusResponse.fromJson(response.data);
     } else {
       throw Exception('Failed to get partition status');
+    }
+  }
+
+  Future<ArmSystemResponse> setPartitionValue(String value) async {
+    final headers = await _getAuthHeaders();
+    final body = await _buildRequestBody();
+
+    final response = await dio.post(
+      '$uri/$value',
+      data: body,
+      options: Options(headers: headers),
+    );
+
+    if (response.statusCode == 200) {
+      return ArmSystemResponse.fromJson(response.data);
+    } else {
+      throw Exception('Failed to update Partition value');
     }
   }
 }

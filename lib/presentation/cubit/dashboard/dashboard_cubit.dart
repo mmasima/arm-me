@@ -25,4 +25,21 @@ class DashboardCubit extends Cubit<DashboardState> {
       emit(DashboardError(e.toString()));
     }
   }
+
+  Future<bool> armSystem(String value) async {
+    emit(ArmSystemLoading());
+
+    try {
+      final response = await api.setPartitionValue(value);
+      if (response.succeeded == true) {
+        return true;
+      } else {
+        emit(ArmSystemError());
+        return false;
+      }
+    } catch (e) {
+      emit(ArmSystemError());
+      return false;
+    }
+  }
 }

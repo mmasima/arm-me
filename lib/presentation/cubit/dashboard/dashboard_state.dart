@@ -17,3 +17,11 @@ class DashboardError extends DashboardState {
 
   DashboardError(this.message);
 }
+
+class ArmSystemLoading extends DashboardState {}
+
+class ArmSystemSubmit extends DashboardState {}
+
+
+class ArmSystemError extends DashboardState {}
+
