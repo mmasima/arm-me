@@ -7,7 +7,7 @@ import '../model/partition_status_response.dart';
 class DemoSystemApi {
   final Dio dio = Dio();
 
-  final uri = 'https://testing.srnservices.net/api/v2/DemoSystem';
+  final uri = 'Uri for Arm me';
 
   Future<String?> _getName() async {
     final prefs = await SharedPreferences.getInstance();
